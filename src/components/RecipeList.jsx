@@ -1,23 +1,26 @@
 import React from 'react'
-import { FiSearch, FiBookmark } from "react-icons/fi";
 import { Link } from 'react-router-dom';
 
-const RecipeCardAdmin = ({ recipe, onSave }) => {
+const RecipeCardAdmin = ({ recipe, onSave, unSave, saved }) => {
     return (
-        <div className="flex flex-col shadow-xl w-4/5 h-auto pb-8 rounded-xl justify-center py-1">
-            <div className='flex flex-col items-center gap-3 mb-10'>
-                <img src={`http://localhost:5000/uploads/${recipe.image}`} alt="" className='w-full p-1 rounded-3xl' />
-                <div>
-                    <h2 className='font-bold text-xl'>{recipe.title}</h2>
+        <div className="flex flex-col shadow-xl  h-full  rounded-xl justify-center py-1">
+            <img src={`http://localhost:5000/uploads/${recipe.image}`} alt={recipe.title} className='w-full rounded-xl p-1' />
+            <div className='flex flex-col justify-between flex-1 '>
+                <div className='p-3 flex flex-col justify-center text-center'>
+                    <h2 className='font-bold text-xl mt-4'>{recipe.title}</h2>
+                    <p className='text-sm text-gray-500 mt-2 max-w-md'>{recipe.description}</p>
                 </div>
-            </div>
-            <div className='flex justify-center gap-2'>
-                <Link to={`/recipes/${recipe._id}`} className='bg-black text-white text-xl px-4 hover:bg-white hover:text-black border border-gray-400  rounded-full '>
-                    <FiSearch />
+                <div className='p-1'>
+                    <Link to={`/recipes/${recipe._id}`} className='bg-black text-white flex justify-center p-3 font-bold px-4 hover:bg-white hover:text-black border border-gray-400  rounded-xl '>
+                        See recipe
                 </Link>
-                <button onClick={() => onSave(recipe._id)} className='bg-black text-white text-xl px-4 hover:bg-white hover:text-black border border-gray-400  rounded-full'>
-                    <FiBookmark />
+                    <button
+                        onClick={saved ? () => unSave(recipe._id) : () => onSave(recipe._id)}
+                        className={`${saved ? 'bg-gray-200  hover:bg-gray-300 transition duration-100' : 'bg-orange-200 hover:bg-orange-300 transition duration-100'} font-bold mt-1 rounded-xl w-full p-3`}
+                    >
+                        {saved ? 'Unsave Recipe' : 'Save Recipe'}
                 </button>
+                </div>
             </div>
         </div>
     )

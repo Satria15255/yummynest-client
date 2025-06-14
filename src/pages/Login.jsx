@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from '../api/axiosInstance'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { toast } from 'react-toastify'
 
 const Login = () => {
     const [form, setForm] = useState({ email: '', password: '' })
@@ -16,17 +17,17 @@ const Login = () => {
         e.preventDefault()
         try {
             const res = await axios.post('/auth/login', form)
-            if (res.ok) {
+            if (res.status === 200) {
                 const expiryDate = new Date(Date.now() + 24 * 60 * 60 * 1000) // 24 hours
                 localStorage.setItem('sessionExpiry', expiryDate.toISOString())
                 localStorage.setItem('token', res.data.token)
                 localStorage.setItem('userId', res.data.user.id)
                 login(res.data.token, res.data.user)
-                alert('Login berhasil!')
+                toast.success('Login Success!!')
                 navigate('/')
             }
         } catch (err) {
-            alert('Login gagal')
+            toast.error('Login Failed')
             console.error(err)
         }
     }

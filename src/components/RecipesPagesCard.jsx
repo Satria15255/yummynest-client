@@ -1,5 +1,7 @@
 import React from 'react'
 import CommentSection from './CommentSection'
+import { useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 
 const RecipePagesCard = ({
@@ -13,10 +15,13 @@ const RecipePagesCard = ({
     onUnsave,
     userId
 }) => {
+
+    const navigate = useNavigate()
     return (
-        <div className='relative flex mt-16 bg-cover items-center justify-center' style={{ backgroundImage: `url('/menu/background2.jpg')` }} >
+        <div className='relative flex mt-16 bg-cover h-full items-center justify-center' style={{ backgroundImage: `url('/menu/background2.jpg')` }} >
             <div className='absolute inset-0 bg-black/50 z-0'></div>
             <div className='relative z-10 bg-white w-3/5 shadow-xl rounded-xl mt-16 mb-16 p-5'>
+                <p className='text-sm'><NavLink as={NavLink} to="/" className="hover:text-orange-300 transition duration-50 font-bold">Home</NavLink> / {recipe.title}</p>
                 <div className='flex border-b border-gray-200 pb-4'>
                     <div className='p-3 w-1/2'>
                         <img
@@ -64,12 +69,11 @@ const RecipePagesCard = ({
                         <label className='text-lg font-bold'>Comment</label>
                         <button
                             onClick={saved ? () => onUnsave(recipe._id) : onSave}
-                            className={`${saved ? 'bg-gray-400' : 'bg-orange-200'} font-bold rounded-xl p-3`}
+                            className={`${saved ? 'bg-gray-400' : 'bg-orange-200'} font-bold rounded-xl w-1/5 py-2`}
                         >
                             {saved ? 'Unsave' : 'Save'}
                         </button>
                     </div>
-
                     <textarea
                         value={commentText}
                         onChange={onCommentChange}

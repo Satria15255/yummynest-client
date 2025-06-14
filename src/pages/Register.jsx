@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { toast } from 'react-toastify'
 
 const Register = ({ isAuthenticated, setIsAuthenticated }) => {
     const [form, setForm] = useState({ username: '', email: '', password: '' })
@@ -17,10 +18,10 @@ const Register = ({ isAuthenticated, setIsAuthenticated }) => {
         e.preventDefault()
         try {
             await axios.post('http://localhost:5000/api/auth/register', form)
-            alert('Registrasi berhasil! silahkan login')
+            toast.success('Registration successful, please re-login with the same email and password!')
             navigate('/login')
         } catch (err) {
-            alert('Registraasi gagal')
+            toast.error('Registration failed')
             console.error(err)
         }
     }

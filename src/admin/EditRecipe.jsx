@@ -1,5 +1,7 @@
 import axios from '../api/axiosInstance'
 import React, { useEffect, useState } from 'react'
+import { FaTrash } from "react-icons/fa";
+
 
 const EditRecipe = ({ isOpen, onClose, recipe, onUpdated }) => {
     const [formData, setFormData] = useState(recipe || {})
@@ -77,53 +79,62 @@ const EditRecipe = ({ isOpen, onClose, recipe, onUpdated }) => {
 
     return (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded-xl shadow-lg w-4/5 overflow-y-auto max-h-[80vh]">
-                <form onSubmit={handleSubmit} className="space-y-2">
-                    <label className='text-lg font-bold '>Food Name</label>
-                    <input name="title" value={formData.title || ""} onChange={handleChange} className="w-full border px-1 rounded" placeholder="Judul" />
-                    <label className='text-lg font-bold'>Description</label>
-                    <textarea name="description" value={formData.description || ""} onChange={handleChange} className="w-full border px-1 rounded" placeholder="Deskripsi" />
-                    <label className='text-lg font-bold'>Ingredients</label>
-                    <textarea name="ingredients" value={formData.ingredients || ""} onChange={handleChange} className="w-full h-20 border px-1 rounded" placeholder="Bahan" />
-                    <label className='text-lg font-bold'>Steps</label>
-                    <textarea name="steps" value={formData.steps || ""} onChange={handleChange} className="w-full h-20 border px-1 rounded" placeholder="Langkah-langkah" />
-                    <input type="file" accept="image/*" onChange={(e) => setSelectedImage(e.target.files[0])} className='w-full' />
+            <div className="bg-white p-3 rounded-xl shadow-lg w-4/5 overflow-y-auto max-h-[95vh]">
+                <div className='grid justify-items-center grid-cols-2'>
+                    <div className='w-4/5'>
+                        <form onSubmit={handleSubmit}>
                     {selectedImage ? (
                         <img src={URL.createObjectURL(selectedImage)}
                             alt="preview"
-                            className="w-32 mt-2 rounded-xl" />
+                                    className="w-full mt-2 rounded-xl" />
                     ) : (
                         recipe?.image && (
-                            <img
-                                src={`http://localhost:5000/uploads/${recipe.image}`}
-                                alt="resep"
-                                className='w-32 mt-2 rounded-xl'
-                            />
+                                        <img src={`http://localhost:5000/uploads/${recipe.image}`} alt="resep" className='w-full  rounded-xl mb-2' />
                         )
                     )}
+                            <input type="file" accept="image/*" onChange={(e) => setSelectedImage(e.target.files[0])} className='py-1 hover:bg-black hover:text-white transition duration-100 px-2 w-full rounded-lg border' />
                 </form>
-                <div>
-                    <h2>Koemntar</h2>
+                        <div className='mt-2 overflow-y-auto max-h-[20vh]'>
                     {comments.length === 0 ? (
                         <p>belum ada komemntrar</p>
                     ) : (
                         comments.map((comment) => (
-                            <div key={comment._id}>
-                                <div>
-                                    <p>{comment.user?.username || "Anonym"}</p>
-                                    <p>{comment.text}</p>
+                            <div key={comment._id} className='bg-gray-300 p-2 rounded-lg mb-2'>
+                                <div className='flex justify-between items-center  gap-2'>
+                                    <div>
+                                        <p className='font-bold text-lg'>@{comment.user?.username || "Anonym"}</p>
+                                        <p className='text-sm'>{comment.text}</p>
+                                        <p className='text-xs text-gray-500 mt-1'>{new Date(comment.createdAt).toLocaleDateString()}</p>
                                 </div>
                                 <button
-                                    onClick={() => handleDeleteComment(comment._id)}>
-                                    Hapus
+                                        onClick={() => handleDeleteComment(comment._id)}
+                                        className='text-gray-500 hover:text-black transition duration-100'
+                                    >
+                                        <FaTrash />
+
                                 </button>
+                                </div>
                             </div>
                         ))
-                    )}
-                </div>
-                <div onSubmit={handleSubmit} className="flex justify-end gap-2 pt-2">
-                    <button type="button" onClick={onClose} className="bg-orange-200 hover:bg-orange-300 transition duration-100 font-bold  w-1/5 px-3 py-1 rounded">Cancel</button>
-                    <button type="submit" onClick={handleSubmit} className="bg-orange-200 hover:bg-orange-300 transition duration-100 font-bold  px-3 w-1/5 py-1 rounded border-gray">Save</button>
+                            )}
+                        </div>
+                    </div>
+                    <div>
+                        <form onSubmit={handleSubmit} className="space-y-2">
+                            <label className='text-lg font-bold '>Food Name</label>
+                            <input name="title" value={formData.title || ""} onChange={handleChange} className="w-full border px-1 rounded" placeholder="Judul" />
+                            <label className='text-lg font-bold'>Description</label>
+                            <textarea name="description" value={formData.description || ""} onChange={handleChange} className="w-full border px-1 rounded" placeholder="Deskripsi" />
+                            <label className='text-lg font-bold'>Ingredients</label>
+                            <textarea name="ingredients" value={formData.ingredients || ""} onChange={handleChange} className="w-full h-40 border px-1 rounded" placeholder="Bahan" />
+                            <label className='text-lg font-bold'>Steps</label>
+                            <textarea name="steps" value={formData.steps || ""} onChange={handleChange} className="w-full h-40 border px-1 rounded" placeholder="Langkah-langkah" />
+                        </form>
+                        <div onSubmit={handleSubmit} className="flex justify-end gap-2 pt-10">
+                            <button type="button" onClick={onClose} className="bg-orange-200 hover:bg-orange-300 transition duration-100 font-bold  w-1/2 px-3 py-1 rounded-lg">Cancel</button>
+                            <button type="submit" onClick={handleSubmit} className="bg-orange-200 hover:bg-orange-300 transition duration-100 font-bold  px-3 w-1/2 py-1 rounded-lg border-gray">Save</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

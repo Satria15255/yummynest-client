@@ -10,6 +10,8 @@ import SavedRecipe from './admin/Saved'
 import Footer from './components/Footer'
 import { Route, Routes } from 'react-router-dom'
 import ScrollToTop from './components/ScrollToTop'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
@@ -33,6 +35,7 @@ function App() {
         </Route>
       </Routes>
       <Footer />
+      <ToastContainer position="top-center" autoClose={3000} />
     </>
   )
 }

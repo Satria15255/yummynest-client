@@ -1,4 +1,5 @@
 import React from 'react'
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 const RecipeCardAdmin = ({ recipe, onDelete, onEdit }) => {
     return (
@@ -11,13 +12,13 @@ const RecipeCardAdmin = ({ recipe, onDelete, onEdit }) => {
                 </div>
             </div>
             <div>
-                <button className='bg-blue-500 text-white px-4 py-2 rounded mr-2'
+                <button className='bg-black hover:bg-gray-300 hover:text-black transition duration-100  text-white text-xl px-6 py-4 rounded mr-2'
                     onClick={() => onDelete(recipe._id)}>
-                    Hapus
+                    <FaTrashAlt />
                 </button>
-                <button className='bg-yellow-500 text-white px-6 py-2 rounded'
+                <button className='bg-gray-300 hover:bg-orange-300  transition duration-100 text-xl py-4 px-6  rounded'
                     onClick={onEdit}>
-                    Edit
+                    <FaEdit />
                 </button>
             </div>
         </div>
