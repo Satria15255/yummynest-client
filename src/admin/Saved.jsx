@@ -36,7 +36,7 @@ const savedRecipe = () => {
   }
 
   return (
-    <div className='p-5 mt-12'>
+    <div className='p-5 mt-12 h-115 overflow-y-auto max-h-[80vh]'>
       <h1 className='mt-5 text-xl font-bold pb-3 mb-3 text-gray-500 border-b border-gray-400'>Saved Recipe</h1>
       <div>
         {savedRecipes.length === 0 ? (

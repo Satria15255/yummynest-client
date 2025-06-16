@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+import axios from '../api/axiosInstance'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { toast } from 'react-toastify'
@@ -17,7 +17,7 @@ const Register = ({ isAuthenticated, setIsAuthenticated }) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            await axios.post('http://localhost:5000/api/auth/register', form)
+            await axios.post('/auth/register', form)
             toast.success('Registration successful, please re-login with the same email and password!')
             navigate('/login')
         } catch (err) {

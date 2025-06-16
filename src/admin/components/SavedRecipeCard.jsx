@@ -1,4 +1,6 @@
 import React from 'react'
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
+
 
 const SavedRecipeCard = ({ recipe, onUnSave }) => {
     return (
@@ -11,13 +13,11 @@ const SavedRecipeCard = ({ recipe, onUnSave }) => {
                 </div>
             </div>
             <div>
-                <button className='bg-blue-500 text-white px-4 py-2 rounded mr-2'
+                <button className='bg-orange-300 hover:bg-orange-400 transition duration-100 text-white px-6 py-4 rounded mr-2'
                     onClick={() => onUnSave(recipe._id)}>
-                    Hapus
+                    <FaTrashAlt />
                 </button>
-                <button className='bg-yellow-500 text-white px-6 py-2 rounded'>
-                    Edit
-                </button>
+
             </div>
         </div>
     )
