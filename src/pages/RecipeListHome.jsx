@@ -95,7 +95,7 @@ const RecipeOnTheWeek = () => {
                     ))}
                 </div>
                 <div className='flex justify-center'>
-                    <NavLink as={NavLink} to="/recipe" className='text-center pt-8 font-bold text-lg text-gray-600 hover:text-black transition duration-100'>View other recipe</NavLink>
+                    <NavLink as={NavLink} to="/recipe" className='text-center pt-8 font-bold text-lg text-gray-600 hover:text-black transition duration-100'>View others recipe</NavLink>
                 </div>
             </div>
         </div>
