@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const instance = axios.create({
-    baseURL: 'https://yummynest-backend.onrender.com/api',
+    baseURL: process.env.REACT_APP_BACKEND_URL + '/api',
+
 })
 
 instance.interceptors.request.use(config => {

@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import axios from '../api/axiosInstance'
+import { toast } from 'react-toastify'
+
 
 const UploadModal = ({ onClose, fetchRecipes }) => {
     const [form, setForm] = useState({
@@ -34,12 +36,12 @@ const UploadModal = ({ onClose, fetchRecipes }) => {
                     'Content-Type': 'multipart/form-data',
                 }
             })
-            alert('Berhasil upload resep!')
+            toast.success('Berhasil upload resep!')
             onClose() // Close the modal after successful upload
             fetchRecipes() // Assuming you have a function to refresh the recipe list
         } catch (err) {
             console.error(err)
-            alert('Gagal upload resep')
+            toast.error('Gagal upload resep')
         }
     }
 
@@ -56,7 +58,7 @@ const UploadModal = ({ onClose, fetchRecipes }) => {
                     <label className='text-lg font-bold'>Steps</label>
                     <textarea name="steps" placeholder='Langkah-langkah' className="border px-2 pb-7 rounded-lg border-gray-500" onChange={handleChange} />
                     <label className='text-lg font-bold'>Picture</label>
-                    <input type="file" name="image" accept="image/" className="border py-1 px-2 rounded-lg border-gray-500" onChange={handleImageChange} />
+                    <input type="file" name="image" accept="image/*" className="border py-1 px-2 rounded-lg border-gray-500" onChange={handleImageChange} />
                     <div className='flex gap-2 '>
                         <button type='button' className='bg-orange-200 px-5 w-1/2 py-2 rounded-lg mt-2 hover:bg-orange-300 transition duration-200 font-bold' onClick={onClose}>Cancel</button>
                         <button type='submit' className='bg-orange-200 px-5 w-1/2 py-2 rounded-lg mt-2 hover:bg-orange-300 transition duration-200 font-bold' onClick={handleSubmit}>Upload Resep</button>

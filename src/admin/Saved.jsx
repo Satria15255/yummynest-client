@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from '../api/axiosInstance'
 import SavedRecipeCard from './components/SavedRecipeCard'
+import { toast } from 'react-toastify'
 
 const savedRecipe = () => {
   const [savedRecipes, setSavedRecipes] = useState([])
@@ -28,9 +29,10 @@ const savedRecipe = () => {
     try {
       await axios.delete(`users/save/${recipeId}`)
       setSavedRecipes(savedRecipes.filter((r) => recipeId !== recipeId))
-      alert('Resep berhasil dihapus')
+      toast.success('Resep berhasil dihapus')
       fetchSavedRecipes()
     } catch (err) {
+      toast.error('Gagal menghapus resep')
       console.error('Gagal menghapus resep', err)
     }
   }

@@ -1,6 +1,8 @@
 import axios from '../api/axiosInstance'
 import React, { useEffect, useState } from 'react'
 import { FaTrash } from "react-icons/fa";
+import { toast } from 'react-toastify'
+
 
 
 const EditRecipe = ({ isOpen, onClose, recipe, onUpdated }) => {
@@ -53,11 +55,11 @@ const EditRecipe = ({ isOpen, onClose, recipe, onUpdated }) => {
             console.log("Response dari server:", res.data)
 
             onUpdated(res.data)
-            alert("Berhasil update resep")
+            toast.success("Berhasil update resep")
             onClose()
         } catch (err) {
             console.log(err)
-            alert("Gagal update resep")
+            toast.error("Gagal update resep")
         }
     }
 
@@ -70,7 +72,7 @@ const EditRecipe = ({ isOpen, onClose, recipe, onUpdated }) => {
             setComments(prev => prev.filter(c => c._id !== commentId))
         } catch (err) {
             console.error("Gagal hapous komentar", err)
-            alert("Gagal hapus komentar")
+            toast.dismiss("Gagal hapus komentar")
         }
     }
 
@@ -89,14 +91,14 @@ const EditRecipe = ({ isOpen, onClose, recipe, onUpdated }) => {
                                     className="w-full mt-2 rounded-xl" />
                     ) : (
                         recipe?.image && (
-                                        <img src={`http://localhost:5000/uploads/${recipe.image}`} alt="resep" className='w-full  rounded-xl mb-2' />
+                                        <img src={`${process.env.REACT_APP_BACKEND_URL}/uploads/${recipe.image}`} alt="resep" className='w-full  rounded-xl mb-2' />
                         )
                     )}
                             <input type="file" accept="image/*" onChange={(e) => setSelectedImage(e.target.files[0])} className='py-1 hover:bg-black hover:text-white transition duration-100 px-2 w-full rounded-lg border' />
                 </form>
                         <div className='mt-2 overflow-y-auto max-h-[20vh]'>
                     {comments.length === 0 ? (
-                        <p>belum ada komemntrar</p>
+                                <p>No comments yet</p>
                     ) : (
                         comments.map((comment) => (
                             <div key={comment._id} className='bg-gray-300 p-2 rounded-lg mb-2'>

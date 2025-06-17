@@ -3,6 +3,7 @@ import RecipeList from '../components/RecipeList'
 import axios from '../api/axiosInstance'
 import { toast } from 'react-toastify'
 import { getToken, getUserId, isLoggedIn } from '../utils/Auth'
+import { NavLink } from 'react-router-dom'
 
 
 const RecipeOnTheWeek = () => {
@@ -92,6 +93,9 @@ const RecipeOnTheWeek = () => {
                             saved={Array.isArray(savedRecipes) && savedRecipes.includes(recipe._id)}
                         />
                     ))}
+                </div>
+                <div className='flex justify-center'>
+                    <NavLink as={NavLink} to="/recipe" className='text-center pt-8 font-bold text-lg text-gray-600 hover:text-black transition duration-100'>View other recipe</NavLink>
                 </div>
             </div>
         </div>
