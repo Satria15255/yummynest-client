@@ -91,7 +91,7 @@ const EditRecipe = ({ isOpen, onClose, recipe, onUpdated }) => {
                                     className="w-full mt-2 rounded-xl" />
                     ) : (
                         recipe?.image && (
-                                        <img src={recipe.image} alt="resep" className='w-full  rounded-xl mb-2' />
+                                        <img src={`https://yummynest-backend.onrender.com/uploads/${recipe.image}`} alt="resep" className='w-full  rounded-xl mb-2' />
                         )
                     )}
                             <input type="file" accept="image/*" onChange={(e) => setSelectedImage(e.target.files[0])} className='py-1 hover:bg-black hover:text-white transition duration-100 px-2 w-full rounded-lg border' />
