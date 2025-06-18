@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const RecipeCardAdmin = ({ recipe, onSave, unSave, saved }) => {
     return (
         <div className="flex flex-col shadow-xl  h-full  rounded-xl justify-center py-1">
-            <img src={`https://yummynest-backend.onrender.com/uploads/${recipe.image}`} alt={recipe.title} className='w-full rounded-xl p-1' />
+            <img src={recipe.image} alt={recipe.title} className='w-full rounded-xl p-1' />
             <div className='flex flex-col justify-between flex-1 '>
                 <div className='p-3 flex flex-col justify-center text-center'>
                     <h2 className='font-bold text-xl mt-4'>{recipe.title}</h2>
