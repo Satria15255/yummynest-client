@@ -26,7 +26,7 @@ const RecipePagesCard = ({
                     <div className='p-3 w-1/2'>
                         <img
                             loading='lazy'
-                            src={`https://yummynest-backend.onrender.com/uploads/${recipe.image}`}
+                            src={recipe.image}
                             alt={recipe.title}
                             className='w-full mb-4 z-20 rounded-xl'
                         />
