@@ -41,7 +41,7 @@ const UploadModal = ({ onClose, fetchRecipes }) => {
             fetchRecipes() // Assuming you have a function to refresh the recipe list
         } catch (err) {
             console.error(err)
-            toast.error('Gagal upload resep')
+            toast.error('Gagal upload resep', err.message)
         }
     }
 
