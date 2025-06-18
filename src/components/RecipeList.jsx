@@ -7,10 +7,10 @@ const RecipeCardAdmin = ({ recipe, onSave, unSave, saved }) => {
             <img src={recipe.image} alt={recipe.title} className='w-full rounded-xl p-1' />
             <div className='flex flex-col justify-between flex-1 '>
                 <div className='p-3 flex flex-col justify-center text-center'>
-                    <h2 className='font-bold text-xl mt-4'>{recipe.title}</h2>
-                    <p className='text-sm text-gray-500 mt-2 max-w-md'>{recipe.description}</p>
+                    <h2 className='font-bold text-sm md:text-xl mt-2'>{recipe.title}</h2>
+                    <p className='hidden md:flex text-xs text-gray-500 mt-2 max-w-lg'>{recipe.description}</p>
                 </div>
-                <div className='p-1'>
+                <div className='p-1 text-xs md:text-lg '>
                     <Link to={`/recipes/${recipe._id}`} className='bg-black text-white flex justify-center p-3 font-bold px-4 hover:bg-white hover:text-black border border-gray-400  rounded-xl '>
                         See recipe
                 </Link>

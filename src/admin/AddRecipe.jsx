@@ -47,21 +47,21 @@ const UploadModal = ({ onClose, fetchRecipes }) => {
 
     return (
         <div className='fixed inset-0 bg-black/40  flex justify-center items-center z-50'>
-            <div className='bg-white w-4/5 h-90% rounded-xl overflow-y-auto max-h-[100vh] relative'>
+            <div className='bg-white w-full h-screen md:w-4/5 md:h-90% rounded-xl md:overflow-y-auto max-h-[100vh] relative'>
                 <form className="flex flex-col gap-2 p-5 z-50  justify-center inset-0">
-                    <label className='text-lg font-bold'>Food Name</label>
+                    <label className='text-sm md:text-lg font-bold'>Food Name</label>
                     <input type="text" name="title" placeholder='Nama Resep' className="border px-2 py-1 rounded-lg border-gray-500" onChange={handleChange} />
-                    <label className='text-lg font-bold'>Description</label>
-                    <textarea name="description" placeholder='Deskripsi' className="border px-2 pb-7 rounded-lg border-gray-500" onChange={handleChange} />
-                    <label className='text-lg font-bold'>Tools & Materials</label>
-                    <textarea type="text" name="ingredients" placeholder='Bahan-bahan' className="border px-2 pb-7 rounded-lg border-gray-500" onChange={handleChange} />
-                    <label className='text-lg font-bold'>Steps</label>
-                    <textarea name="steps" placeholder='Langkah-langkah' className="border px-2 pb-7 rounded-lg border-gray-500" onChange={handleChange} />
-                    <label className='text-lg font-bold'>Picture</label>
+                    <label className='text-sm md:text-lg font-bold'>Description</label>
+                    <textarea name="description" placeholder='Deskripsi' className="border px-2 pb-6 md:pb-7 rounded-lg border-gray-500" onChange={handleChange} />
+                    <label className='text-sm md:text-lg font-bold'>Tools & Materials</label>
+                    <textarea type="text" name="ingredients" placeholder='Bahan-bahan' className="border px-2 pb-6 md:pb-7 rounded-lg border-gray-500" onChange={handleChange} />
+                    <label className='ext-sm md:text-lg font-bold'>Steps</label>
+                    <textarea name="steps" placeholder='Langkah-langkah' className="border px-2 pb-6 md:pb-7 rounded-lg border-gray-500" onChange={handleChange} />
+                    <label className='ext-sm md:text-lg font-bold'>Picture</label>
                     <input type="file" name="image" accept="image/*" className="border py-1 px-2 rounded-lg border-gray-500" onChange={handleImageChange} />
                     <div className='flex gap-2 '>
-                        <button type='button' className='bg-orange-200 px-5 w-1/2 py-2 rounded-lg mt-2 hover:bg-orange-300 transition duration-200 font-bold' onClick={onClose}>Cancel</button>
-                        <button type='submit' className='bg-orange-200 px-5 w-1/2 py-2 rounded-lg mt-2 hover:bg-orange-300 transition duration-200 font-bold' onClick={handleSubmit}>Upload Resep</button>
+                        <button type='button' className='bg-orange-200 text-sm md:text-lg px-5 w-1/2 py-2 rounded-lg mt-2 hover:bg-orange-300 transition duration-200 font-bold' onClick={onClose}>Cancel</button>
+                        <button type='submit' className='bg-orange-200 text-sm md:text-lg px-5 w-1/2 py-2 rounded-lg mt-2 hover:bg-orange-300 transition duration-200 font-bold' onClick={handleSubmit}>Upload Resep</button>
                     </div>
                 </form>
             </div>

@@ -81,9 +81,9 @@ const EditRecipe = ({ isOpen, onClose, recipe, onUpdated }) => {
 
     return (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-            <div className="bg-white p-3 rounded-xl shadow-lg w-4/5 overflow-y-auto max-h-[95vh]">
-                <div className='grid justify-items-center grid-cols-2'>
-                    <div className='w-4/5'>
+            <div className="bg-white p-3 rounded-xl shadow-lg w-full md:w-4/5 overflow-y-auto max-h-[100vh] md:max-h-[95vh]">
+                <div className='grid justify-items-center grid-cols-1 md:grid-cols-2'>
+                    <div className='w-full md:w-4/5'>
                         <form onSubmit={handleSubmit}>
                     {selectedImage ? (
                         <img src={URL.createObjectURL(selectedImage)}

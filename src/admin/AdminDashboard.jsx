@@ -3,6 +3,8 @@ import axios from '../api/axiosInstance';
 import RecipeCardAdmin from './components/RecipeCardAdmin';
 import EditModals from './EditRecipe'
 import UploadModal from './AddRecipe'
+import { toast } from 'react-toastify'
+
 
 const AdminDashboard = () => {
     const [recipes, setRecipes] = useState([])
@@ -35,7 +37,7 @@ const AdminDashboard = () => {
         try {
             await axios.delete(`/recipes/${id}`)
             setRecipes(recipes.filter((r) => r._id !== id))
-            alert('Resep berhasil dihapus')
+            toast.success('Resep berhasil dihapus')
             fetchRecipes()
         } catch (err) {
             console.error('Gagal menghapus resep', err)
@@ -52,8 +54,8 @@ const AdminDashboard = () => {
         <div className='p-5 h-screen overflow-y-auto'>
             <h1 className='text-3xl font-bold mb-6'>Admin Dashboard</h1>
             <div className='flex justify-between border-b py-2'>
-                <p className='text-2xl font-bold text-gray-500'>Postingan</p>
-                <button onClick={() => setShowModal(true)} className='flex bg-orange-200 hover:bg-orange-300 transition duration-100 px-4 p-2 font-bold text-lg rounded-xl'>Upload</button>
+                <p className=' text-xs md:text-2xl flex items-center font-bold text-gray-500'>Postingan</p>
+                <button onClick={() => setShowModal(true)} className='flex bg-orange-200 hover:bg-orange-300 transition duration-100 px-4 p-2 font-bold text-xs md:text-lg rounded-xl'>Upload</button>
                 {showModal && <UploadModal fetchRecipes={() => fetchRecipes()} onClose={() => setShowModal(false)} />}
             </div>
             <div className='w-full gap-4'>

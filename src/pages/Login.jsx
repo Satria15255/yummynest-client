@@ -33,8 +33,8 @@ const Login = () => {
     }
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white rounded-xl p-6 w-2/5">
+        <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+            <div className="bg-white rounded-xl p-6  md:w-4/5 lg:w-2/5">
                 <p onClick={() => navigate('/')} className='float-right font-bold'>X</p>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-2 p-5">
                     <h2 className="text-xl font-bold mb-3 text-center">Login</h2>

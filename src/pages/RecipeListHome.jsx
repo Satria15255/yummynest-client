@@ -83,7 +83,7 @@ const RecipeOnTheWeek = () => {
         <div className=' flex flex-col w-full mb-8'>
             <h1 className='text-2xl font-bold text-gray-500 p-4 border-b border-gray-200 m-4'>Latest Recipe</h1>
             <div className='p-5'>
-                <div className='w-full px-10 grid place-items-center grid-cols-4 gap-5'>
+                <div className='w-full lg:px-10 grid place-items-center grid-cols-2 md:grid-cols-4 gap-3'>
                     {recipes.map((recipe) => (
                         <RecipeList
                             key={recipe._id}

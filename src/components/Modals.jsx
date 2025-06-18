@@ -18,7 +18,7 @@ const Modals = ({ onClose }) => {
 
     return (
         <div onClick={onClose} className='fixed h-screen w-full inset-0  flex z-50'>
-            <div className='bg-white rounded-md p-1 w-80 h-screen fixed right-0 '>
+            <div className='bg-white rounded-md p-1 w-60 md:w-80 h-screen fixed right-0 '>
                 <button onClick={onClose} className="text-orange-300 mb-6 mt-2 ml-2 font-bold float-left">x</button>
                 {!isAuthenticated ? (
                     <div className='flex flex-col text-left pt-6'>

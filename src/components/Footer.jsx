@@ -11,7 +11,7 @@ const Footer = () => {
                 <div className='flex justify-center gap-10 items-center'>
                     <h1 className='text-lg font-bold'>Yummy<span className='text-orange-400'>Nest.</span></h1>
                 </div>
-                <div className='flex justify-center gap-8 mt-5 text-xl font-semibold'>
+                <div className='flex justify-center gap-4 md:gap-8 mt-5 text-xs md:text-lg lg:text-xl font-semibold'>
                     <NavLink as={NavLink} to='/' className='hover:text-orange-400 transition duration-100'>Home</NavLink>
                     <NavLink as={NavLink} to='/recipe' className='hover:text-orange-400 transition duration-100'>Recipe</NavLink>
                     <NavLink as={NavLink} to='/' className='hover:text-orange-400 transition duration-100'>Latest Recipe</NavLink>
