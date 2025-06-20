@@ -16,6 +16,29 @@ const RecipePagesCard = ({
     userId
 }) => {
 
+    const ingredients = (() => {
+        try {
+            if (typeof recipe.ingredients === "string") {
+                return JSON.parse(recipe.ingredients)
+            }
+            return recipe.ingredients || []
+        } catch {
+            return []
+        }
+    })()
+
+    const steps = (() => {
+        try {
+            if (typeof recipe.steps === "string") {
+                return JSON.parse(recipe.steps)
+            }
+            return recipe.steps || []
+        } catch {
+            return []
+        }
+    })()
+
+
     const navigate = useNavigate()
     return (
         <div className='relative flex mt-16 bg-cover h-full items-center justify-center' style={{ backgroundImage: `url('/menu/background2.jpg')` }} >
@@ -23,7 +46,7 @@ const RecipePagesCard = ({
             <div className='relative z-10 bg-white w-4/5 md:w-4/5 lg:w-3/5 shadow-xl rounded-xl mt-16 mb-16 p-2 md:p-5'>
                 <p className='text-sm'><NavLink as={NavLink} to="/" className="hover:text-orange-300 transition duration-50 font-bold">Home</NavLink> / {recipe.title}</p>
                 <div className='grid grid-cols-1 md:grid-cols-2 border-b border-gray-200 pb-4'>
-                    <div className='p-3 w-full lg:w-1/2'>
+                    <div className='p-3 w-full '>
                         <img
                             loading='lazy'
                             src={recipe.image}
@@ -49,16 +72,16 @@ const RecipePagesCard = ({
                             />
                         </div>
                     </div>
-                    <div className='p-3 lg:w-1/2'>
+                    <div className='p-3 '>
                         <h2 className='text-lg lg:text-2xl font-semibold mb-2'>Ingredients</h2>
                         <ul className='list-disc text-sm lg:text-lg pl-5 mb-4  lg:max-w-lg'>
-                            {recipe.ingredients?.map((item, index) => (
+                            {ingredients.map((item, index) => (
                                 <li key={index}>{item}</li>
                             ))}
                         </ul>
                         <h2 className='text-lg lg:text-2xl font-semibold mb-2'>Instructions</h2>
                         <ul className='text-sm lg:text-lg max-w-lg'>
-                            {recipe.steps?.map((step, index) => (
+                            {steps.map((step, index) => (
                                 <li key={index} className='mb-2'>{index + 1}. {step}</li>
                             ))}
                         </ul>
@@ -68,7 +91,7 @@ const RecipePagesCard = ({
                     <div className='flex justify-end items-center py-2'>
                         <button
                             onClick={saved ? () => onUnsave(recipe._id) : onSave}
-                            className={`${saved ? 'bg-gray-400' : 'bg-orange-200'} font-bold rounded-xl w-2/5 text-xs text-center md:w-1/5 py-2`}
+                            className={`${saved ? 'bg-gray-300 hover:bg-gray-400 transition duration-100' : 'bg-orange-200 hover:bg-orange-300 transition duration-100'} font-bold rounded-xl w-2/5 text-xs text-center md:w-1/5 py-2`}
                         >
                             {saved ? 'Unsave' : 'Save'}
                         </button>

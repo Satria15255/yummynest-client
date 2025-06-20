@@ -26,8 +26,8 @@ const UploadModal = ({ onClose, fetchRecipes }) => {
         const formData = new FormData()
         formData.append('title', form.title)
         formData.append('description', form.description)
-        formData.append('ingredients', JSON.stringify(form.ingredients.split(',')))//array
-        formData.append('steps', JSON.stringify(form.steps.split(',')))
+        formData.append('ingredients', JSON.stringify(form.ingredients.split('\n')))//array
+        formData.append('steps', JSON.stringify(form.steps.split('\n')))
         formData.append('image', form.image)
 
         try {
@@ -47,7 +47,7 @@ const UploadModal = ({ onClose, fetchRecipes }) => {
 
     return (
         <div className='fixed inset-0 bg-black/40  flex justify-center items-center z-50'>
-            <div className='bg-white w-full h-screen md:w-4/5 md:h-90% rounded-xl md:overflow-y-auto max-h-[100vh] relative'>
+            <div className='bg-white w-full h-screen md:w-4/5 md:h-90% rounded-xl md:overflow-y-auto max-h-[95vh] relative'>
                 <form className="flex flex-col gap-2 p-5 z-50  justify-center inset-0">
                     <label className='text-sm md:text-lg font-bold'>Food Name</label>
                     <input type="text" name="title" placeholder='Nama Resep' className="border px-2 py-1 rounded-lg border-gray-500" onChange={handleChange} />

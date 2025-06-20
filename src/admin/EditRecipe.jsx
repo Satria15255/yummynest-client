@@ -10,8 +10,12 @@ const EditRecipe = ({ isOpen, onClose, recipe, onUpdated }) => {
     const [selectedImage, setSelectedImage] = useState(null)
     const [comments, setComments] = useState([])
     const [token, setToken] = useState("")
+    const [ingredientsText, setIngredientsText] = useState("")
+    const [stepsText, setStepsText] = useState("")
 
     useEffect(() => {
+        setIngredientsText((recipe.ingredients || []).join('\n'))
+        setStepsText((recipe.steps || []).join('\n'))
         setFormData(recipe || {})
         setToken(localStorage.getItem("token") || "")
 
@@ -42,8 +46,13 @@ const EditRecipe = ({ isOpen, onClose, recipe, onUpdated }) => {
             const form = new FormData()
             form.append('title', formData.title)
             form.append('description', formData.description)
-            form.append('ingredients', formData.ingredients)
-            form.append('steps', formData.steps)
+
+            const ingredientsArray = ingredientsText.split('\n').map(i => i.trim()).filter(i => i)
+            const stepsArray = stepsText.split('\n').map(i => i.trim()).filter(i => i)
+
+            ingredientsArray.forEach((item) => form.append('ingredients[]', item))
+            stepsArray.forEach((item) => form.append('steps[]', item))
+
             if (selectedImage) {
                 form.append('image', selectedImage)
             }
@@ -128,9 +137,9 @@ const EditRecipe = ({ isOpen, onClose, recipe, onUpdated }) => {
                             <label className='text-lg font-bold'>Description</label>
                             <textarea name="description" value={formData.description || ""} onChange={handleChange} className="w-full border px-1 rounded" placeholder="Deskripsi" />
                             <label className='text-lg font-bold'>Ingredients</label>
-                            <textarea name="ingredients" value={formData.ingredients || ""} onChange={handleChange} className="w-full h-40 border px-1 rounded" placeholder="Bahan" />
+                            <textarea name="ingredients" value={ingredientsText} onChange={(e) => setIngredientsText(e.target.value)} className="w-full h-40 border px-1 rounded" placeholder="Bahan" />
                             <label className='text-lg font-bold'>Steps</label>
-                            <textarea name="steps" value={formData.steps || ""} onChange={handleChange} className="w-full h-40 border px-1 rounded" placeholder="Langkah-langkah" />
+                            <textarea name="steps" value={stepsText} onChange={(e) => setStepsText(e.target.value)} className="w-full h-40 border px-1 rounded" placeholder="Langkah-langkah" />
                         </form>
                         <div onSubmit={handleSubmit} className="flex justify-end gap-2 pt-10">
                             <button type="button" onClick={onClose} className="bg-orange-200 hover:bg-orange-300 transition duration-100 font-bold  w-1/2 px-3 py-1 rounded-lg">Cancel</button>
