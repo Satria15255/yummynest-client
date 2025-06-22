@@ -13,7 +13,7 @@ const CommentSection = ({ comments, userId, onDelete }) => {
                         <p className='text-sm'>{comment.text}</p>
                         <p className='text-xs text-gray-500'>{new Date(comment.createdAt).toLocaleDateString()}</p>
                         </div>
-                        {(comment.user._id === userId || comment.user === userId) && (
+                        {userId && (comment.user?._id === userId || comment.user === userId) && (
                             <button onClick={() => onDelete(comment._id)} className=' text-sm '>
                                 <FaTrash />
                             </button>

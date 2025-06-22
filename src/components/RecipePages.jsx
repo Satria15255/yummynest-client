@@ -97,21 +97,45 @@ const RecipePages = () => {
         }
     }
 
-    const handleDeleteComment = async (commentId) => {
-        const confirmDelete = window.confirm("Yakin ingin menghapus komentar ini?")
-        if (!confirmDelete) return
 
-        try {
-            const token = localStorage.getItem('token')
-            await axios.delete(`/recipes/${id}/comments/${commentId}`, {
-                headers: { Authorization: `Bearer ${token}` }
-            })
-            fetchRecipes()
-        } catch (err) {
-            console.error(err)
-            alert("Gagal hapus komentar")
-        }
+    const handleDeleteComment = async (commentId) => {
+        toast((t) => (
+            <div className="p-4 bg-white rounded-xl shadow-md text-gray-800 max-w-xs">
+                <p className="text-sm font-medium">Are you sure you want to delete the comment?</p>
+                <div className="mt-4 flex justify-end gap-3">
+                    <button
+                        onClick={async () => {
+                            toast.dismiss(t.id)
+                            try {
+                                const token = localStorage.getItem('token')
+                                await axios.delete(`/recipes/${id}/comments/${commentId}`, {
+                                    headers: { Authorization: `Bearer ${token}` },
+                                })
+                                fetchRecipes()
+                                toast.success("Successfully deleted comment")
+                            } catch (err) {
+                                console.error(err)
+                                toast.error("failed to delete comment")
+                            }
+                        }}
+                        className="w-1/5 py-1 flex items-center justify-center text-sm rounded-md bg-orange-300 font-bold hover:bg-orange-400 transition"
+                    >
+                        Delete
+                    </button>
+                    <button
+                        onClick={() => toast.dismiss(t.id)}
+                        className="w-1/5 py-1 text-sm rounded-md bg-gray-200 text-gray-800 hover:bg-gray-300 transition"
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        ), {
+            duration: 7000, // toast akan hilang otomatis jika user diamkan
+            position: 'top-center',
+        })
     }
+
 
     return (
         <RecipePagesCard
