@@ -1,22 +1,28 @@
 // RecipePages.jsx (Logic & Data Handler)
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import axios from '../api/axiosInstance'
 import RecipePagesCard from './RecipesPagesCard'
+import { getRecipesById, getSavedRecipes } from '../service/recipe.service'
 import { toast } from 'react-toastify'
 import { getToken, getUserId, isLoggedIn } from '../utils/Auth'
+import useRecipeActions from '../hooks/UseRecipeAction'
 
 const RecipePages = () => {
     const { id } = useParams()
     const [recipe, setRecipe] = useState([])
     const [commentText, setCommentText] = useState('')
-    const [saved, setSaved] = useState(false)
     const userId = getUserId()
-    const token = getToken()
+    const {
+        savedRecipe,
+        setSavedRecipe,
+        handleLike,
+        handleSave,
+        handleUnSave
+    } = useRecipeActions()
 
     const fetchRecipes = async () => {
         try {
-            const res = await axios.get(`recipes/${id}`)
+            const res = await getRecipesById(id)
             setRecipe(res.data)
             console.log(res.data)
         } catch (err) {
@@ -24,28 +30,19 @@ const RecipePages = () => {
         }
     }
 
-    const chekIfSaved = async () => {
-        if (!isLoggedIn) {
-            setSaved(false)
-            return
-        }
+    useEffect(() => {
+        if (!isLoggedIn()) return
 
-        try {
-            const res = await axios.get('/users/saved', {
-                hedares: { Authorization: `Bearer ${token}` }
+        getSavedRecipes()
+            .then(res => {
+                const ids = res.data.map(r => r._id)
+                setSavedRecipe(ids)
             })
-
-            const saveIds = res.data.map(r => r._id)
-            setSaved(saveIds.includes(id))
-        } catch (err) {
-            console.error("gagal memeriksa status simpan", err)
-            setSaved(false)
-        }
-    }
+            .catch(() => setSavedRecipe([]))
+    }, [setSavedRecipe])
 
     useEffect(() => {
         fetchRecipes()
-        chekIfSaved()
     }, [id])
 
     const handleSubmit = async (e) => {
@@ -64,36 +61,6 @@ const RecipePages = () => {
         } catch (err) {
             console.error(err)
             toast.error('Failed to submit comment')
-        }
-    }
-
-    const handleSave = async () => {
-        if (!isLoggedIn()) {
-            toast.warn("Please login first to save a recipe!")
-            return
-        }
-        try {
-            await axios.post(`users/save/${id}`, {}, {
-                headers: { Authorization: `Bearer ${token}` },
-            })
-            setSaved(true)
-            toast.success('Recipe saved!')
-        } catch (err) {
-            toast.error('Failed save recipe')
-            console.log(err)
-        }
-    }
-
-    const handleUnSave = async () => {
-        try {
-            await axios.delete(`users/save/${id}`, {
-                headers: { Authorization: `Bearer ${token}` },
-            })
-            setSaved(false)
-            toast.success('Recipe successfully removed from save list!')
-            fetchRecipes()
-        } catch (err) {
-            console.error('Gagal menghapus resep', err)
         }
     }
 
@@ -140,7 +107,7 @@ const RecipePages = () => {
     return (
         <RecipePagesCard
             recipe={recipe}
-            saved={saved}
+            saved={Array.isArray(savedRecipe) && savedRecipe.includes(id)}
             commentText={commentText}
             onCommentChange={(e) => setCommentText(e.target.value)}
             onCommentSubmit={handleSubmit}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from '../api/axiosInstance';
 import RecipeCardAdmin from './components/RecipeCardAdmin';
+import { myRecipes, deleteRecipe } from '../service/recipe.service'
+import ConfirmDeleteToast from './components/ConfirmDeleteToast';
 import EditModals from './EditRecipe'
 import UploadModal from './AddRecipe'
 import { toast } from 'react-toastify'
@@ -15,12 +16,7 @@ const AdminDashboard = () => {
     // GET resep user
     const fetchRecipes = async () => {
         try {
-            const token = localStorage.getItem('token')
-            const res = await axios.get('recipes/myrecipes', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
+            const res = await myRecipes()
             console.log('res.data', res.data)
             setRecipes(res.data)
         } catch (err) {
@@ -33,14 +29,27 @@ const AdminDashboard = () => {
     }, [])
 
     // DELETE resep user
-    const handleDelete = async (id) => {
-        try {
-            await axios.delete(`/recipes/${id}`)
-            setRecipes(recipes.filter((r) => r._id !== id))
-            toast.success('Resep berhasil dihapus')
-            fetchRecipes()
-        } catch (err) {
-            console.error('Gagal menghapus resep', err)
+    const handleDelete = (id) => {
+        toast(
+            ({ closeToast }) => (
+                <ConfirmDeleteToast
+                    onCancel={closeToast}
+                    onConfirm={async () => {
+
+                        await deleteRecipe(id)
+                        setRecipes(recipes.filter((r) => r._id !== id))
+                        toast.success('Resep berhasil dihapus')
+                        fetchRecipes()
+                        closeToast()
+                    }}
+                />
+            )
+        ),
+        {
+            autoClose: false,
+            closeOnClick: false,
+            closeButton: false
+
         }
     }
 

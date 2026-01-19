@@ -1,5 +1,5 @@
-import axios from '../api/axiosInstance'
 import React, { useEffect, useState } from 'react'
+import { getRecipesById, editRecipe } from '../service/recipe.service'
 import { FaTrash } from "react-icons/fa";
 import { toast } from 'react-toastify'
 
@@ -22,9 +22,7 @@ const EditRecipe = ({ isOpen, onClose, recipe, onUpdated }) => {
         const fetchRecipeDetails = async () => {
             if (recipe?._id) {
                 try {
-                    const res = await axios.get(`/recipes/${recipe._id}`, {
-                        headers: { Authorization: `Bearer ${token}` }
-                    })
+                    const res = await getRecipesById(recipe._id)
                     setComments(res.data.comments || [])
                 } catch (err) {
                     console.error("Error", err)
@@ -42,10 +40,10 @@ const EditRecipe = ({ isOpen, onClose, recipe, onUpdated }) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const token = localStorage.getItem('token')
             const form = new FormData()
             form.append('title', formData.title)
             form.append('description', formData.description)
+            form.append('category', formData.category)
 
             const ingredientsArray = ingredientsText.split('\n').map(i => i.trim()).filter(i => i)
             const stepsArray = stepsText.split('\n').map(i => i.trim()).filter(i => i)
@@ -58,9 +56,7 @@ const EditRecipe = ({ isOpen, onClose, recipe, onUpdated }) => {
             }
 
             console.log("Data yang di kirim:", formData)
-            const res = await axios.put(`recipes/${recipe._id}`, form, {
-                headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" }
-            })
+            const res = await editRecipe(recipe._id, form)
             console.log("Response dari server:", res.data)
 
             onUpdated(res.data)
@@ -136,6 +132,8 @@ const EditRecipe = ({ isOpen, onClose, recipe, onUpdated }) => {
                             <input name="title" value={formData.title || ""} onChange={handleChange} className="w-full border px-1 rounded" placeholder="Judul" />
                             <label className='text-lg font-bold'>Description</label>
                             <textarea name="description" value={formData.description || ""} onChange={handleChange} className="w-full border px-1 rounded" placeholder="Deskripsi" />
+                            <label className='text-lg font-bold'>Category</label>
+                            <input name="category" value={formData.category || ""} onChange={handleChange} className="w-full border px-1 rounded" placeholder="Kategori" />
                             <label className='text-lg font-bold'>Ingredients</label>
                             <textarea name="ingredients" value={ingredientsText} onChange={(e) => setIngredientsText(e.target.value)} className="w-full h-40 border px-1 rounded" placeholder="Bahan" />
                             <label className='text-lg font-bold'>Steps</label>

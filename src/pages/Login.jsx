@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import axios from '../api/axiosInstance'
+import { loginUser } from '../service/user.service'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { toast } from 'react-toastify'
@@ -16,7 +16,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.post('/auth/login', form)
+            const res = await loginUser(form)
             if (res.status === 200) {
                 const expiryDate = new Date(Date.now() + 24 * 60 * 60 * 1000) // 24 hours
                 localStorage.setItem('sessionExpiry', expiryDate.toISOString())
@@ -33,8 +33,8 @@ const Login = () => {
     }
 
     return (
-        <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
-            <div className="bg-white rounded-xl p-6  md:w-4/5 lg:w-2/5">
+        <div className="fixed inset-0 bg-white flex justify-center items-center z-50">
+            <div className="bg-white rounded-xl p-6 border border-gray-400 shadow-xl md:w-4/5 lg:w-2/5">
                 <p onClick={() => navigate('/')} className='float-right font-bold'>X</p>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-2 p-5">
                     <h2 className="text-xl font-bold mb-3 text-center">Login</h2>

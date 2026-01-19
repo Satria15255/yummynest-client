@@ -2,8 +2,13 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import AdminDashboard from './admin/AdminDashboard'
 import Navbar from './components/Navbar'
-import Home from './pages/Home'
-import RecipeList from './pages/RecipeListHome'
+import Hero from './pages/Hero'
+import AboutUs from './pages/AboutUs'
+import PopularRecipe from './pages/PopularRecipe'
+import LatestRecipe from './pages/LatestRecipe'
+import Testimoni from './pages/Testimoni'
+import Contact from './pages/Contact'
+import Promotion from './pages/Promot'
 import RecipePages from './components/RecipePages'
 import Recipe from './pages/Recipe'
 import SavedRecipe from './admin/Saved'
@@ -17,6 +22,7 @@ function App() {
 
   return (
     <>
+      <ToastContainer autoClose={3000} position='top-center' />
       <Navbar />
       <ScrollToTop />
       <Routes>
@@ -28,14 +34,18 @@ function App() {
         <Route path='/recipe' element={<Recipe />} />
         <Route path='/' element={
           <>
-            <Home />
-            <RecipeList />
+            <Hero />
+            <AboutUs />
+            <PopularRecipe />
+            <Promotion />
+            <LatestRecipe />
+            <Testimoni />
+            <Contact />
           </>
         }>
         </Route>
       </Routes>
       <Footer />
-      <ToastContainer position="top-center" autoClose={3000} />
     </>
   )
 }

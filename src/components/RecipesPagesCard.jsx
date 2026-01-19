@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import CommentSection from './CommentSection'
 import { useNavigate } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
-
 
 const RecipePagesCard = ({
     recipe,
@@ -15,6 +14,7 @@ const RecipePagesCard = ({
     onUnsave,
     userId
 }) => {
+
 
     const ingredients = (() => {
         try {
@@ -90,7 +90,7 @@ const RecipePagesCard = ({
                 <div className='flex flex-col'>
                     <div className='flex justify-end items-center py-2'>
                         <button
-                            onClick={saved ? () => onUnsave(recipe._id) : onSave}
+                            onClick={() => saved ? onUnsave(recipe._id) : onSave(recipe._id)}
                             className={`${saved ? 'bg-gray-300 hover:bg-gray-400 transition duration-100' : 'bg-orange-200 hover:bg-orange-300 transition duration-100'} font-bold rounded-xl w-2/5 text-xs text-center md:w-1/5 py-2`}
                         >
                             {saved ? 'Unsave' : 'Save'}

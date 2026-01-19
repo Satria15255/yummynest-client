@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import axios from '../api/axiosInstance'
+import { createRecipe } from '../service/recipe.service'
 import { toast } from 'react-toastify'
 
 
@@ -7,6 +7,7 @@ const UploadModal = ({ onClose, fetchRecipes }) => {
     const [form, setForm] = useState({
         title: '',
         description: '',
+        category: '',
         ingredients: '',
         steps: '',
         image: null
@@ -26,16 +27,13 @@ const UploadModal = ({ onClose, fetchRecipes }) => {
         const formData = new FormData()
         formData.append('title', form.title)
         formData.append('description', form.description)
+        formData.append('category', form.category)
         formData.append('ingredients', JSON.stringify(form.ingredients.split('\n')))//array
         formData.append('steps', JSON.stringify(form.steps.split('\n')))
         formData.append('image', form.image)
 
         try {
-            await axios.post('/recipes/upload', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                }
-            })
+            await createRecipe(formData)
             toast.success('Berhasil upload resep!')
             onClose() // Close the modal after successful upload
             fetchRecipes() // Assuming you have a function to refresh the recipe list
@@ -53,6 +51,8 @@ const UploadModal = ({ onClose, fetchRecipes }) => {
                     <input type="text" name="title" placeholder='Nama Resep' className="border px-2 py-1 rounded-lg border-gray-500" onChange={handleChange} />
                     <label className='text-sm md:text-lg font-bold'>Description</label>
                     <textarea name="description" placeholder='Deskripsi' className="border px-2 pb-6 md:pb-7 rounded-lg border-gray-500" onChange={handleChange} />
+                    <label className='text-sm md:text-lg font-bold'>Category</label>
+                    <input type="text" name="category" placeholder='Kategori' className="border px-2 py-1 rounded-lg border-gray-500" onChange={handleChange} />
                     <label className='text-sm md:text-lg font-bold'>Tools & Materials</label>
                     <textarea type="text" name="ingredients" placeholder='Bahan-bahan' className="border px-2 pb-6 md:pb-7 rounded-lg border-gray-500" onChange={handleChange} />
                     <label className='ext-sm md:text-lg font-bold'>Steps</label>

@@ -1,29 +1,39 @@
 import React, { useEffect, useState } from 'react'
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle, FaBars } from "react-icons/fa";
 import { NavLink } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext';
 import Modals from './Modals';
+import MobileMenu from './MobileRoutes'
 
 const Navbar = () => {
     const navigate = useNavigate()
     const [showModal, setShowModal] = useState(false)
+    const [isMobile, setIsMobile] = useState(false)
     const { isAuthenticated, user } = useAuth()
 
     return (
-        <div className=' flex justify-between p-5 font-bold bg-white border-b border-gray-500  backdrop-blur-md z-50 h-20 items-center inset-0 fixed top-0'>
+        <section className=' flex justify-between px-4 font-bold rounded-b-xl bg-white z-50 h-14 items-center inset-0 fixed top-0'>
             <div>
-                <h1 className='md:text-xl lg:text-2xl font-bold'>Yummy<span className='text-orange-300'>Nest.</span></h1>
+                <h1 className='md:text-xl lg:text-xl font-bold'>Yummy<span className='text-orange-300'>Nest.</span></h1>
             </div>
-            <div className='flex gap-3 text-sm md:text-lg xl:text-xl items-center'>
+            <div className='hidden md:flex gap-3 items-center'>
                 <div className='flex  md:flex gap-3'>
-                <NavLink as={NavLink} to='/' className='hover:text-orange-300'>Home</NavLink>
-                <NavLink as={NavLink} to='/recipe' className='hover:text-orange-300'>Recipe</NavLink>
+                    <NavLink as={NavLink} to='/' className='text-sm md:text-lg font-semibold hover:text-orange-300'>Home</NavLink>
+                    <NavLink as={NavLink} to='/recipe' className='text-sm md:text-lg font-semibold hover:text-orange-300'>About</NavLink>
+                    <NavLink as={NavLink} to='/recipe' className='text-sm md:text-lg font-semibold hover:text-orange-300'>Recipe</NavLink>
+                    <NavLink as={NavLink} to='/recipe' className='text-sm md:text-lg font-semibold hover:text-orange-300'>Blog</NavLink>
                 </div>
-                <button onClick={() => setShowModal(true)} className='hover:text-orange-300 text-4xl  md:text-5xl '><FaUserCircle /></button>
-                {showModal && <Modals onClose={() => setShowModal(false)} isAuthenticated={isAuthenticated} user={user} />}
             </div>
-        </div>
+            <div className='flex gap-4 items-center'>
+                <button onClick={() => setShowModal(true)} className='hover:text-orange-300 text-2xl md:text-3xl '><FaUserCircle /></button>
+                <button onClick={() => setIsMobile(!isMobile)} className='md:hidden hover:text-orange-300 text-2xl '>
+                    <FaBars />
+                </button>
+            </div>
+            {isMobile && <MobileMenu onClose={() => setIsMobile(false)} />}
+            {showModal && <Modals onClose={() => setShowModal(false)} isAuthenticated={isAuthenticated} user={user} />}
+        </section>
     )
 }
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import axios from '../api/axiosInstance'
 import SavedRecipeCard from './components/SavedRecipeCard'
+import { getSavedRecipes } from '../service/recipe.service'
 import { toast } from 'react-toastify'
 
 const savedRecipe = () => {
@@ -8,12 +8,7 @@ const savedRecipe = () => {
 
   const fetchSavedRecipes = async () => {
     try {
-      const token = localStorage.getItem('token')
-      const res = await axios.get('users/saved', {
-        headers: {
-          Authorizathion: `Bearer ${token}`
-        }
-      })
+      const res = await getSavedRecipes()
       setSavedRecipes(res.data)
       console.log(res.data)
     } catch (err) {

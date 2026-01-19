@@ -1,99 +1,86 @@
 import React, { useEffect, useState } from 'react'
-import RecipeList from '../components/RecipeList'
-import axios from '../api/axiosInstance'
-import { toast } from 'react-toastify'
-import { getToken, getUserId, isLoggedIn } from '../utils/Auth'
-
+import RecipeCard from '../components/RecipeCard'
+import { getRecipes, getSavedRecipes } from '../service/recipe.service'
+import { getUserId, isLoggedIn } from '../utils/Auth'
+import headerImage from '../assets/background.png'
+import useRecipeActions from '../hooks/UseRecipeAction'
 
 const RecipeOnTheWeek = () => {
     const [recipes, setRecipes] = useState([])
-    const [savedRecipes, setSavedRecipes] = useState([])
+    const [activeRecipe, setActiveRecipe] = useState("All");
+    const category = ["All", "Main Course", "Snack", "Dessert", "Drink", "Healthy", "Breakfast"]
     const userId = getUserId()
-    const token = getToken()
 
-    const fetchRecipes = async () => {
-        try {
-            const res = await axios.get('/recipes')
-            setRecipes(res.data)
-        } catch (err) {
-            console.error("Gagal mengambil data resep", err)
-        }
-    }
-
-    const fetchSavedRecipes = async () => {
-        try {
-            const token = localStorage.getItem('token')
-            const res = await axios.get('/users/saved', {
-                headers: { Authorization: `Bearer ${token}` }
-            })
-
-            // Ambil hanya id-nya saja dari resep yang disimpan
-            const savedIds = res.data.map((r) => r._id)
-            setSavedRecipes(savedIds)
-        } catch (err) {
-            console.error("Gagal mengambil daftar resep tersimpan", err)
-            setSavedRecipes([]) // fallback
-        }
-    }
-
+    const {
+        savedRecipe,
+        setSavedRecipe,
+        handleLike,
+        handleSave,
+        handleUnSave
+    } = useRecipeActions()
 
     useEffect(() => {
-        fetchRecipes()
-        fetchSavedRecipes()
+        getRecipes()
+            .then(res => setRecipes(res.data))
+            .catch(err => console.err(err))
     }, [])
 
+    useEffect(() => {
+        if (!isLoggedIn()) return
 
-    const handleSave = async (recipeId) => {
-        if (!isLoggedIn()) {
-            toast.warn("Please login first to save a recipe!")
-            return
-        }
-        try {
-            const token = localStorage.getItem('token')
-            await axios.post(`users/save/${recipeId}`, {}, {
-                headers: { Authorization: `Bearer ${token}` },
+        getSavedRecipes()
+            .then(res => {
+                const ids = res.data.map(r => r._id)
+                setSavedRecipe(ids)
             })
+            .catch(() => setSavedRecipe([]))
+    }, [setSavedRecipe])
 
-            setSavedRecipes(prev => [...prev, recipeId]) // ✅ tambahkan ID
-            toast.success('Recipe saved successfully! ')
-        } catch (err) {
-            toast.error('Failed save recipe!')
-            console.log(err)
-        }
-    }
-
-    const handleUnSave = async (recipeId) => {
-        try {
-            const token = localStorage.getItem('token')
-            await axios.delete(`users/save/${recipeId}`, {
-                headers: { Authorization: `Bearer ${token}` },
-            })
-            setSavedRecipes(prev => prev.filter(id => id !== recipeId)) // ✅ hapus ID
-            toast.success('Recipe successfully removed from save list!')
-            fetchRecipes()
-        } catch (err) {
-            console.error('Failed to delete recipe from save list :(', err)
-        }
-    }
-
+    const filterRecipes = activeRecipe === "All" ? recipes : recipes.filter((recipes) => recipes.category === activeRecipe);
 
     return (
-        <div className=' flex flex-col w-full mb-8'>
-            <h1 className='text-2xl font-bold text-gray-500 p-4 border-b border-gray-200 m-4'>Latest Recipe</h1>
-            <div className='p-5'>
-                <div className='w-full lg:px-10 grid place-items-center grid-cols-2 md:grid-cols-4 gap-3'>
-                    {recipes.map((recipe) => (
-                        <RecipeList
-                            key={recipe._id}
-                            recipe={recipe}
-                            onSave={() => handleSave(recipe._id)}
-                            unSave={() => handleUnSave(recipe._id)}
-                            saved={Array.isArray(savedRecipes) && savedRecipes.includes(recipe._id)}
-                        />
+        <section className=' flex flex-col w-full mb-8'>
+            <header style={{ backgroundImage: `url(${headerImage})` }} className='h-[60vh] w-full bg-cover bg-center flex items-center justify-center'>
+                <p className='text-8xl font-bold text-center text-white'>Recipe</p>
+            </header>
+            <nav className='flex pl-7 items-center pt-4'>
+                <p className='text-lg font-semibold'>Categoy :</p>
+                <div>
+                    {category.map((cat) => (
+                        <button
+                            key={cat}
+                            onClick={() => setActiveRecipe(cat)}
+                            className={` transition font-bold px-7 py-2
+                        ${activeRecipe === cat ? "text-yellow-500 border-b " : "hover:text-yellow-500"}`}>
+                            {cat}
+                        </button>
                     ))}
                 </div>
-            </div>
-        </div>
+            </nav>
+            <main className='p-5'>
+                <div className='w-full grid place-items-center grid-cols-2 md:grid-cols-3'>
+                    {filterRecipes.map((recipe) => {
+                        const isLiked = recipe.likes?.some(
+                            id => id.toString() === userId)
+                        const likesCount = recipe.likes?.length ?? 0
+                        const commentsCount = recipe.comments?.length ?? 0
+                        return (
+                            <RecipeCard
+                                key={recipe._id}
+                                recipe={recipe}
+                                onSave={() => handleSave(recipe._id)}
+                                unSave={() => handleUnSave(recipe._id)}
+                                saved={Array.isArray(savedRecipe) && savedRecipe.includes(recipe._id)}
+                                handleLike={() => handleLike(recipe._id, setRecipes)}
+                                isLiked={isLiked}
+                                likesCount={likesCount}
+                                commentsCount={commentsCount}
+                            />
+                        )
+                    })}
+                </div>
+            </main>
+        </section>
     )
 }
 
