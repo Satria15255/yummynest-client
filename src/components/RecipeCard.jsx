@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { LuBookmark, LuBookmarkCheck, LuMessagesSquare } from "react-icons/lu";
+import { PiHeartStraightFill } from "react-icons/pi";
 import { MdStar } from "react-icons/md";
 
 const RecipeCardAdmin = ({ recipe, onSave, unSave, saved, handleLike, isLiked, likesCount, commentsCount }) => {
@@ -22,12 +23,12 @@ const RecipeCardAdmin = ({ recipe, onSave, unSave, saved, handleLike, isLiked, l
                         <p className='text-xs font-semibold text-grey-200'>3.5K Review</p>
                     </div>
                     <h2 className='font-bold text-xs md:text-xl mt-2'>{recipe.title}</h2>
-                    {/* <p className='md:flex text-xs text-gray-500 mt-2 max-w-lg'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut nobis eos, minus sequi autem quasi culpa nostrum doloremque non eius quo!</p> */}
+                    <p className='hidden md:flex text-xs text-gray-500 mt-2 max-w-lg'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut nobis eos, minus sequi autem quasi culpa nostrum doloremque non eius quo!</p>
                 </div>
             </header>
             <footer className='flex justify-around items-center border-t border-gray-200 py-6 px-2'>
-                <button onClick={handleLike} className={`text-sm ${isLiked ? 'text-red-500' : 'text-gray-500'}`}>
-                    {isLiked ? '❤️' : '🤍'} {likesCount}
+                <button onClick={handleLike} className={`text-sm flex items-center ${isLiked ? 'text-red-500' : 'text-gray-500'}`}>
+                    {isLiked ? <PiHeartStraightFill /> : <PiHeartStraightFill />} {likesCount}
                 </button>
                 <button className='flex items-center gap-2'><LuMessagesSquare size={15} />{commentsCount}</button>
                 <button

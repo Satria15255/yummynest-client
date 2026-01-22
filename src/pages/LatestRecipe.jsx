@@ -44,7 +44,7 @@ const LatestRecipe = () => {
             </header>
             <div className='p-2 md:p-5'>
                 <div className='w-full lg:px-10 grid place-items-center grid-cols-2 md:grid-cols-3 gap-3'>
-                    {recipes.map((recipe) => {
+                    {recipes.slice(0, 6).map((recipe) => {
                         const isLiked = recipe.likes?.some(
                             id => id.toString() === userId
                         )
