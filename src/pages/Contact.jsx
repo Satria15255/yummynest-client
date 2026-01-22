@@ -3,7 +3,7 @@ import { LuInstagram } from "react-icons/lu";
 import { FaFacebookSquare, FaWhatsapp, FaTwitter } from "react-icons/fa";
 import { createTestimonial } from "../service/testimonial.service"
 import { toast } from "react-toastify";
-import StarRating from "../components/starRating"
+import StarRating from "../components/StarRating"
 
 const socialMedia = [
     {
