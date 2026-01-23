@@ -58,10 +58,10 @@ const Contact = () => {
     }
 
     return (
-        <div className="grid bg-cover bg-center w-full h-auto place-items-center">
+        <div className="grid bg-cover bg-center w-full h-auto place-items-center mb-12">
             {/* Contact */}
             <div className="flex flex-col md:flex-row justify-center items-center p-1">
-                <div className="w-auto md:w-[70vh] h-[75vh] md:h-[60vh] bg-white rounded-3xl px-7 flex flex-col justify-center my-12 space-y-4 border border-orange-300 rounded">
+                <div className="w-auto md:w-[70vh] h-auto md:h-[60vh] bg-white rounded-3xl px-7 py-7 flex flex-col justify-center my-12 space-y-4 border border-orange-300 rounded">
                     <p className='text-2xl md:text-3xl font-bold'>Join the <span className='text-orange-300'>YummyNest Community</span> here</p>
                     <p className="text-sm max-w-xs">Join the discussion and get the latest information from yummynest by following our community on the following platforms.</p>
                     <div className="">
@@ -73,7 +73,7 @@ const Contact = () => {
                     </div>
                 </div>
                 {/* Message form */}
-                <section className="w-auto md:w-[70vh] h-[75vh] md:h-[60vh] bg-white px-7 flex flex-col justify-center space-y-2 rounded">
+                <section className="w-auto md:w-[70vh] h-auto md:h-[60vh] bg-white px-7 flex flex-col justify-center space-y-2 rounded">
                     <p className="text-2xl md:text-3xl font-bold">Share Your Opinion <span className="text-orange-300">About Yummynest</span> Here</p>
                     <StarRating rating={rating} setRating={setRating} />
                     <form onSubmit={handleSubmit}>

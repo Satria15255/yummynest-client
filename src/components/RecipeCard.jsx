@@ -8,7 +8,7 @@ const RecipeCardAdmin = ({ recipe, onSave, unSave, saved, handleLike, isLiked, l
     const navigate = useNavigate()
 
     return (
-        <section className="flex flex-col shadow-lg w-auto h-[62vh] md:w-[60vh] md:h-[75vh] rounded-xl justify-between px-1 my-4 hover:shadow-2xl transition duration-200 bg-white">
+        <section className="flex flex-col shadow-lg w-auto h-auto md:w-[60vh] md:h-[75vh] rounded-xl justify-between px-1 my-4 hover:shadow-2xl transition duration-200 bg-white">
             <header onClick={() => navigate(`/recipes/${recipe._id}`)}>
                 <img src={recipe.image} alt={recipe.title} className='w-full h-40 md:h-60 object-cover object-center rounded-xl p-1' />
                 <div className='p-3 flex flex-col justify-center'>
@@ -22,7 +22,7 @@ const RecipeCardAdmin = ({ recipe, onSave, unSave, saved, handleLike, isLiked, l
                         </div>
                         <p className='text-xs font-semibold text-grey-200'>3.5K Review</p>
                     </div>
-                    <h2 className='font-bold text-xs md:text-xl mt-2'>{recipe.title}</h2>
+                    <h2 className='h-7 font-bold text-xs md:text-xl mt-2'>{recipe.title}</h2>
                     <p className='hidden md:flex text-xs text-gray-500 mt-2 max-w-lg'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut nobis eos, minus sequi autem quasi culpa nostrum doloremque non eius quo!</p>
                 </div>
             </header>
