@@ -41,7 +41,7 @@ const RecipePagesCard = ({
 
     const navigate = useNavigate()
     return (
-        <div className='relative flex mt-16 bg-cover h-full items-center justify-center' style={{ backgroundImage: `url('/menu/background2.jpg')` }} >
+        <div className='relative flex mt-16 bg-cover h-full items-center justify-center' style={{ backgroundImage: `url('/image/background2.jpg')` }} >
             <div className='absolute inset-0 bg-black/50 z-0'></div>
             <div className='relative z-10 bg-white w-4/5 md:w-4/5 lg:w-3/5 shadow-xl rounded-xl mt-16 mb-16 p-2 md:p-5'>
                 <p className='text-sm'><NavLink as={NavLink} to="/" className="hover:text-orange-300 transition duration-50 font-bold">Home</NavLink> / {recipe.title}</p>
@@ -55,7 +55,6 @@ const RecipePagesCard = ({
                         />
                         <div className='flex flex-col justify-between text-sm '>
                             <div className=' justify-between '>
-                                <p className="text-sm lg:text-xl font-bold">@{recipe.user?.username || "Anonim"}</p>
                                 <p className='text-sm lg:text-lg text-gray-500'>Posted on : {new Date(recipe.createdAt).toLocaleDateString()}</p>
                             </div>
                             <h1 className='text-lg lg:text-3xl font-bold mb-4 mt-2'>{recipe.title}</h1>

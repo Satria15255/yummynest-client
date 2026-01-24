@@ -40,24 +40,28 @@ const RecipeOnTheWeek = () => {
 
     return (
         <section className=' flex flex-col w-full mb-8'>
-            <header style={{ backgroundImage: `url(${headerImage})` }} className='h-[60vh] w-full bg-cover bg-center flex items-center justify-center'>
-                <p className='text-8xl font-bold text-center text-white'>Recipe</p>
+            <header style={{ backgroundImage: `url(/image/recipePage.jpg)` }} className='h-[30vh] md:h-[60vh] w-full bg-cover bg-center flex items-center justify-center'>
+                <p className='text-5xl md:text-8xl font-bold text-center text-gray-800'>Recipe</p>
             </header>
-            <nav className='flex pl-7 items-center pt-4'>
-                <p className='text-lg font-semibold'>Categoy :</p>
-                <div>
-                    {category.map((cat) => (
-                        <button
-                            key={cat}
-                            onClick={() => setActiveRecipe(cat)}
-                            className={` transition font-bold px-7 py-2
-                        ${activeRecipe === cat ? "text-yellow-500 border-b " : "hover:text-yellow-500"}`}>
-                            {cat}
-                        </button>
-                    ))}
+            <div className='w-full flex p-2 md:pl-7 items-center md:pt-4'>
+                <p className='hidden md:flex text-lg font-semibold w-30'>Categoy :</p>
+                <div className='w-full max-w-8xl overflow-x-auto scrollbar'>
+                    <div className='flex gap-1 max-w-8xl'>
+                        {category.map((cat) => (
+                            <div className='py-3'>
+                                <p
+                                    key={cat}
+                                    onClick={() => setActiveRecipe(cat)}
+                                    className={`flex w-35 h-10 justify-center items-center text-center  transition font-bold text-sm md:py-2
+                                    ${activeRecipe === cat ? "text-yellow-500 border rounded-full " : "hover:text-yellow-500"}`}>
+                                    {cat}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            </nav>
-            <main className='p-5'>
+            </div>
+            <main className='p-2 md:p-5'>
                 <div className='w-full grid place-items-center grid-cols-2 md:grid-cols-3'>
                     {filterRecipes.map((recipe) => {
                         const isLiked = recipe.likes?.some(

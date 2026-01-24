@@ -7,15 +7,27 @@ import Modals from './Modals';
 import MobileMenu from './MobileRoutes'
 
 const Navbar = () => {
-    const navigate = useNavigate()
+    const [scrolled, setScrolled] = useState("false")
     const [showModal, setShowModal] = useState(false)
     const [isMobile, setIsMobile] = useState(false)
     const { isAuthenticated, user } = useAuth()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const isScrolled = window.scrollY > 50
+            setScrolled(isScrolled)
+        }
+
+        window.addEventListener("scroll", handleScroll)
+        return () => removeEventListener("scroll", handleScroll)
+    }, [])
+
 
     return (
-        <section className=' flex justify-between px-4 font-bold rounded-b-xl bg-white z-50 h-14 items-center inset-0 fixed top-0'>
+        <section className={`flex justify-between px-4 font-bold rounded-b-xl z-50 h-14 items-center inset-0 fixed top-0 transition-all duration-100 ease-in-out ${scrolled ? "bg-white" : "bg-transparant"}`}>
             <div>
-                <h1 className='md:text-xl lg:text-xl font-bold'>Yummy<span className='text-orange-300'>Nest.</span></h1>
+                <h1 onClick={() => navigate("/")} className='md:text-xl lg:text-xl font-bold'>Yummy<span className='text-orange-300'>Nest.</span></h1>
             </div>
             <div className='hidden md:flex gap-3 items-center'>
                 <div className='flex  md:flex gap-3'>
